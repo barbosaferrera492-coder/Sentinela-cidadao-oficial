@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinela Cidadão | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-[#0f172a] text-slate-200 font-sans">
+    <div class="flex min-h-screen">
+        <aside class="w-64 bg-[#1e293b] p-6 hidden md:block border-r border-slate-700">
+            <h1 class="text-blue-400 text-xl font-bold mb-8 flex items-center">
+                <i class="fas fa-shield-halved mr-2"></i> Sentinela
+            </h1>
+            <nav class="space-y-4">
+                <a href="#" class="block p-2 bg-blue-600 rounded text-white"><i class="fas fa-chart-line mr-2"></i> Dashboard</a>
+                <a href="#" class="block p-2 hover:bg-slate-700 rounded"><i class="fas fa-envelope-open-text mr-2"></i> Análises</a>
+                <a href="#" class="block p-2 hover:bg-slate-700 rounded"><i class="fas fa-map-marker-alt mr-2"></i> Mapa de Riscos</a>
+            </nav>
+        </aside>
 
+        <main class="flex-1 p-8">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold">Painel de Controle</h2>
+                    <p class="text-slate-400 text-sm">Monitoramento de Engenharia Social - São Fidélis</p>
+                </div>
+                <div class="bg-slate-800 p-2 rounded-full px-4 border border-slate-700">
+                    <span class="text-green-400 text-xs">● Sistema Ativo</span>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-[#1e293b] p-6 rounded-xl border border-slate-700">
+                    <p class="text-slate-400 text-sm mb-2 font-medium uppercase tracking-wider">Ameaças Detectadas</p>
+                    <h3 class="text-3xl font-bold text-red-400">127</h3>
+                </div>
+                <div class="bg-[#1e293b] p-6 rounded-xl border border-slate-700">
+                    <p class="text-slate-400 text-sm mb-2 font-medium uppercase tracking-wider">Cidadãos Protegidos</p>
+                    <h3 class="text-3xl font-bold text-blue-400">1.042</h3>
+                </div>
+                <div class="bg-[#1e293b] p-6 rounded-xl border border-slate-700">
+                    <p class="text-slate-400 text-sm mb-2 font-medium uppercase tracking-wider">Eficiência da IA</p>
+                    <h3 class="text-3xl font-bold text-green-400">98.4%</h3>
+                </div>
+            </div>
+
+            <section class="bg-[#1e293b] p-8 rounded-xl border border-blue-500/30 shadow-xl">
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    <i class="fas fa-search-dollar mr-2 text-blue-400"></i> Analisador de Mensagens
+                </h3>
+                <textarea id="inputMensagem" class="w-full bg-[#0f172a] border border-slate-700 rounded-lg p-4 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="4" placeholder="Cole aqui um SMS ou mensagem suspeita..."></textarea>
+                <button onclick="processar()" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-blue-900/20">
+                    INICIAR ANÁLISE EM TEMPO REAL
+                </button>
+
+                <div id="statusArea" class="mt-6 p-4 rounded-lg hidden border animate-pulse"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function processar() {
+            const texto = document.getElementById('inputMensagem').value;
+            const res = document.getElementById('statusArea');
+            if(!texto) return alert("Insira uma mensagem para analisar");
+
+            res.className = "mt-6 p-4 rounded-lg bg-blue-900/30 border-blue-500 text-blue-300 block";
+            res.innerHTML = "<i class='fas fa-robot animate-bounce mr-2'></i> Nossa IA está verificando padrões de fraude em São Fidélis...";
+
+            setTimeout(() => {
+                const suspeito = /ganhou|premio|clique|urgente|bloqueio|atualize|pix|senha/i.test(texto);
+                if(suspeito) {
+                    res.className = "mt-6 p-4 rounded-lg bg-red-900/30 border-red-500 text-red-400 block";
+                    res.innerHTML = "<strong><i class='fas fa-exclamation-triangle mr-2'></i> ALTA PROBABILIDADE DE GOLPE:</strong> Detectamos gatilhos de urgência e falsas promessas. Recomenda-se bloquear o remetente.";
+                } else {
+                    res.className = "mt-6 p-4 rounded-lg bg-green-900/30 border-green-500 text-green-400 block";
+                    res.innerHTML = "<strong><i class='fas fa-check-circle mr-2'></i> BAIXO RISCO:</strong> Não encontramos padrões óbvios de engenharia social, mas mantenha a atenção.";
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
